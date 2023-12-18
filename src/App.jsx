@@ -2,6 +2,12 @@ import { useState } from "react";
 import CardClassComponent from "./components/CardClassComponent";
 import CardFunctionComponent from "./components/CardFunctionComponent";
 import logo from "./logo.svg";
+import router from "./router/routes";
+import Menu from "./components/Menu";
+import MemoComponent from "./components/MemoComponent";
+import EmployeeList from "./components/EmployeeList";
+import Mouse from "./components/Mouse";
+import useWindowSize from "./hook/useWindowSIze";
 // import './App.css';
 
 let textStyle = { color: "#61DAFB" };
@@ -62,15 +68,28 @@ function Greeting(isLoggedIn) {
 
 function App() {
   const [inputValue, setInputValue] = useState("");
-
+  const { width, height } = useWindowSize();
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log({ inputValue });
   };
+
   return (
     <>
       <div>
-        {dshv.map((hv, index) => (
+        <Mouse
+          render={(mouseLocation) => (
+            <div>
+              Location x: {mouseLocation.x}, Location y: {mouseLocation.y}
+              <div>Chiều rộng cửa sổ: {width}</div>
+              <div>Chiều cao cửa sổ: {height}</div>
+            </div>
+          )}
+        />
+        {/* <EmployeeList /> */}
+        {/* <Menu /> */}
+        {/* {router} */}
+        {/* {dshv.map((hv, index) => (
           <CardFunctionComponent
             key={hv.id}
             name={hv.name}
@@ -91,7 +110,7 @@ function App() {
             onChange={(e) => setInputValue(e.target.value)}
           />
           <input type="submit" value="send to server" />
-        </form>
+        </form> */}
       </div>
     </>
   );
