@@ -8,6 +8,11 @@ import MemoComponent from "./components/MemoComponent";
 import EmployeeList from "./components/EmployeeList";
 import Mouse from "./components/Mouse";
 import useWindowSize from "./hook/useWindowSIze";
+import { useSelector, useDispatch } from "react-redux";
+import COUNTER from "./redux/actions/counter";
+import USER from "./redux/actions/user";
+import CounterWithReduxConnect from "./components/CounterWithReduxConnect";
+
 // import './App.css';
 
 let textStyle = { color: "#61DAFB" };
@@ -74,10 +79,42 @@ function App() {
     console.log({ inputValue });
   };
 
+  const dispatch = useDispatch();
+
+  const { count, message } = useSelector((state) => state.counter);
+  const { name, age } = useSelector((state) => state.user);
+
+  const increment = () => {
+    return { type: COUNTER.INCREMENT };
+  };
+  const setName = (newName) => {
+    return { type: USER.UPDATE_NAME, nameValue: newName };
+  };
   return (
     <>
       <div>
-        <Mouse
+        <CounterWithReduxConnect />
+        {/* <div>Tên user: {name}</div>
+        <button onClick={() => dispatch(setName("an"))}>set user name</button>
+        <div>giá trị counter: {count}</div>
+        <div>
+          giá trị message: {message} {count}
+        </div>
+        <button onClick={() => dispatch(increment())}>Increment</button>
+        <button onClick={() => dispatch({ type: COUNTER.DECREMENT })}>
+          Decrement
+        </button>
+        <button
+          onClick={() =>
+            dispatch({
+              type: COUNTER.UPDATE_MESSAGE,
+              messageValue: "Noi dung updated",
+            })
+          }
+        >
+          Update message
+        </button> */}
+        {/* <Mouse
           render={(mouseLocation) => (
             <div>
               Location x: {mouseLocation.x}, Location y: {mouseLocation.y}
@@ -85,7 +122,7 @@ function App() {
               <div>Chiều cao cửa sổ: {height}</div>
             </div>
           )}
-        />
+        /> */}
         {/* <EmployeeList /> */}
         {/* <Menu /> */}
         {/* {router} */}
