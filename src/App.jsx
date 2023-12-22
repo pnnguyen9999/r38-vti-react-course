@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CardClassComponent from "./components/CardClassComponent";
 import CardFunctionComponent from "./components/CardFunctionComponent";
 import logo from "./logo.svg";
@@ -12,6 +12,12 @@ import { useSelector, useDispatch } from "react-redux";
 import COUNTER from "./redux/actions/counter";
 import USER from "./redux/actions/user";
 import CounterWithReduxConnect from "./components/CounterWithReduxConnect";
+import {
+  decremented,
+  fetchData,
+  incremented,
+  updateMessage,
+} from "./redux/reducers/counterReducer";
 
 // import './App.css';
 
@@ -82,38 +88,29 @@ function App() {
   const dispatch = useDispatch();
 
   const { count, message } = useSelector((state) => state.counter);
-  const { name, age } = useSelector((state) => state.user);
 
-  const increment = () => {
-    return { type: COUNTER.INCREMENT };
-  };
-  const setName = (newName) => {
-    return { type: USER.UPDATE_NAME, nameValue: newName };
-  };
+  useEffect(() => {
+    dispatch(fetchData());
+  }, []);
   return (
     <>
       <div>
-        <CounterWithReduxConnect />
-        {/* <div>Tên user: {name}</div>
-        <button onClick={() => dispatch(setName("an"))}>set user name</button>
+        {/* <CounterWithReduxConnect /> */}
         <div>giá trị counter: {count}</div>
         <div>
           giá trị message: {message} {count}
         </div>
-        <button onClick={() => dispatch(increment())}>Increment</button>
-        <button onClick={() => dispatch({ type: COUNTER.DECREMENT })}>
-          Decrement
-        </button>
+        <button onClick={() => dispatch(incremented())}>Increment</button>
+        <button onClick={() => dispatch(decremented())}>Decrement</button>
         <button
           onClick={() =>
-            dispatch({
-              type: COUNTER.UPDATE_MESSAGE,
-              messageValue: "Noi dung updated",
-            })
+            dispatch(
+              updateMessage({ value1: "Hellooooooo !", value2: "abcxyz" })
+            )
           }
         >
           Update message
-        </button> */}
+        </button>
         {/* <Mouse
           render={(mouseLocation) => (
             <div>
